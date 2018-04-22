@@ -1,0 +1,52 @@
+---
+title: "MTcars"
+author: "Evan Petricca"
+date: "April 22, 2018"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+##See the Regression Models Course Project
+- "Since the beginning of the Data Science Specialization, we've noticed the unbelievable passion students have about our courses and the generosity they show toward each other on the course forums. A couple students have created quality content around the subjects we discuss, and many of these materials are so good we feel that they should be shared with all of our students."
+
+Find all details here
+URL: https://class.coursera.org/devdataprod-007 URL: https://class.coursera.org/devdataprod-007/human_grading/view/courses/972606/assessments/5/submissions
+
+
+
+## Motor Trend Car Road Tests
+
+- The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973-74 models).
+
+source
+```{r mtcars, Echo=TRUE}
+library(datasets)
+head(mtcars, 3)
+```
+
+## mtcars dataset - format
+```{r mtcars, Echo=TRUE}
+as.data.frame(mtcars)
+```
+
+## analysis
+```{r mtcars, Echo=TRUE}
+  formulaTextPoint <- reactive({
+    paste("mpg ~", "as.integer(", input$variable, ")")  })
+  
+  fit <- reactive({
+    lm(as.formula(formulaTextPoint()), data=mpgData)  })
+
+  output$fit <- renderPrint({
+    summary(fit()) })
+  
+  output$mpgPlot <- renderPlot({
+    with(mpgData, {
+      plot(as.formula(formulaTextPoint()))
+      abline(fit(), col=2)
+    })  })
+```
